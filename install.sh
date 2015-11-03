@@ -1,19 +1,6 @@
 #!/bin/sh
 
 
-# default branch is stable, you can use any git tag, branch here
-BRANCH=${BRANCH:-stable}
-
-
-# download installer for branch $BRANCH
-# this script will download itself again to ensure we can easily switch from a branch to another
-# if you want to avoid this curl, you can set SKIP_BRANCH_CHECKING
-if [ -z "$SKIP_BRANCH_CHECKING" ]; then
-    exec curl -sLo - https://github.com/moul/travis-docker/raw/${BRANCH}/install.sh | SKIP_BRANCH_CHECKING=1 sh -xe
-    exit $?
-fi
-
-
 # version numbers
 COMPOSE_VERSION=1.2.0
 
@@ -68,6 +55,6 @@ fi
 
 # Download binary
 curl -sLo linux https://github.com/moul/travis-docker/raw/dist/linux
-curl -sLo linux-init https://github.com/moul/travis-docker/raw/${BRANCH}/linux-init
-curl -sLo run https://github.com/moul/travis-docker/raw/${BRANCH}/run
+curl -sLo linux-init https://raw.githubusercontent.com/zekizeki/travis-docker/master/linux-init
+curl -sLo run https://raw.githubusercontent.com/zekizeki/travis-docker/master/run
 chmod +x linux linux-init run
